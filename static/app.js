@@ -2,8 +2,21 @@ $(document).ready(function() {
   var socket = io.connect();
 
   socket.on('connect', function() {
-    socket.send('User connected.')
+    socket.send('User connected.');
     console.log('Yeah! Connected!');
+  });
+
+  socket.on('response name', function(name) {
+    $('.nameList').append('<option value="' + name.data + '">' + name.data + '</option>');
+  });
+
+  $('#myName').keyup(function(event){
+    if (event.keyCode == 13) {
+      socket.emit('my name', {data: $('#myName').val()});
+      $('#myName').prop('readonly', true)
+                  .css('color', 'grey');
+      return false;
+    }
   });
 
   socket.on('message', function(msg) {

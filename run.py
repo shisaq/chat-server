@@ -9,6 +9,10 @@ socketio = SocketIO(app)
 def index():
     return render_template('index.html')
 
+@socketio.on('my name')
+def regist(name):
+    emit('response name', {'data': name['data']})
+
 @socketio.on('message')
 def handle_message(msg):
     print('Message:' + msg)
