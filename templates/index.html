@@ -9,10 +9,10 @@
 {% block content %}
   <h1>Chat Server</h1>
   <nav>
-    <div class="myNameBar">
-      Name:
-      <input type="text" id="myName">
-    </div>
+    <form class="myNameBar" method="post">
+      <label for="myName">Name: </label>
+      <input type="text" name="username" id="myName">
+    </form>
     <select class="nameList">
     </select>
   </nav>

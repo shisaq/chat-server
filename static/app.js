@@ -19,6 +19,11 @@ $(document).ready(function() {
     }
   });
 
+  socket.on('my response', function(user) {
+    console.log(user);
+    $('.room').append('<p>Welcome, ' + user + '</p>');
+  });
+
   socket.on('message', function(msg) {
     $('.room').append('<p>' + msg + '</p>');
   });
