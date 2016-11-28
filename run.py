@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, url_for, redirect, g
+from flask import Flask, session, render_template, request, url_for, redirect
 from flask_socketio import SocketIO, send, emit
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
 import os
@@ -54,8 +54,7 @@ def logout():
 def connect_handler():
     if current_user.is_authenticated:
         emit('my response',
-            current_user.id,
-            #  {'message': '{0} has joined'.format(current_user.id)},
+             {'message': '{0} has joined'.format(current_user.id)},
              broadcast=True)
     else:
         return False
