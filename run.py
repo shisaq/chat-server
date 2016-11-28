@@ -1,6 +1,6 @@
 from flask import Flask, session, render_template, request, url_for, redirect
 from flask_socketio import SocketIO, send, emit
-from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 import os
 
 app = Flask(__name__)
@@ -29,24 +29,25 @@ def request_loader(request):
 # index with login
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        session['user'] = request.form['username']
-        login_user(load_user(session['user']))
+    if request.method == 'POST' and request.form['username'] != None:
+        # session['user'] = request.form['username']
+        login_user(load_user(request.form['username']))
 
     return render_template('index.html')
 
 # test if get session successfully
 @app.route('/login')
-def getsession():
-    if 'user' in session:
-        return session['user']
+def login():
+    if current_user.id:
+        return current_user.id
 
     return 'Not logged in!'
 
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('user', None)
     logout_user()
+    # session.pop('user', None)
 
     return redirect(url_for('index'))
 
@@ -54,7 +55,7 @@ def logout():
 def connect_handler():
     if current_user.is_authenticated:
         emit('my response',
-             {'message': '{0} has joined'.format(current_user.id)},
+             {'name': current_user.id},
              broadcast=True)
     else:
         return False
@@ -66,7 +67,8 @@ def regist(name):
 @socketio.on('message')
 def handle_message(msg):
     print('Message:' + msg)
-    send(msg, broadcast=True)
+    final = '{0}: '.format(current_user.id) + msg
+    send(final, broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app)

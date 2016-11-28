@@ -21,10 +21,11 @@ $(document).ready(function() {
 
   socket.on('my response', function(user) {
     console.log(user);
-    if (user.message === 'None has joined') {
+    if (user.name === null) {
       return false;
     } else {
-      $('.room').append('<p>Welcome, ' + user.message + '</p>');
+      $('.room').append('<p>Welcome, ' + user.name + '</p>');
+      $('.nameList').append('<option>' + user.name + '</option>');
     }
   });
 
