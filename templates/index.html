@@ -11,7 +11,14 @@
   <nav>
     <form class="myNameBar" method="post">
       <label for="myName">Name: </label>
-      <input type="text" name="username" id="myName" value="{{ current_user.id }}">
+      <input type="text" name="username" id="myName"
+      {% if current_user.id != None %}
+        value="{{ current_user.id }}" readonly="true" style="color: grey;"
+      {% else %}
+        value=""
+      {% endif %}
+      >
+
     </form>
     <select class="nameList">
     </select>
