@@ -7,3 +7,7 @@
  * [Flask](http://flask.pocoo.org/)
  * [SocketIO](http://socket.io/)
  * [React](https://facebook.github.io/react/)
+
+## Liscense
+
+MIT
