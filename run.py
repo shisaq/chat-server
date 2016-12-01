@@ -1,5 +1,5 @@
 from flask import Flask, session, render_template, request, url_for, redirect
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 import os
 
@@ -69,6 +69,10 @@ def handle_message(msg):
     print('Message:' + msg)
     final = '{0}: '.format(current_user.id) + msg
     send(final, broadcast=True)
+
+@socketio.on('enter room')
+def enter_room(message):
+    join_room(message['room'])
 
 if __name__ == '__main__':
     socketio.run(app)

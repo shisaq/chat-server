@@ -3,7 +3,7 @@
 {% block head %}
   {{ super() }}
   <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
+  <script src="//cdn.socket.io/socket.io-1.4.5.js"></script>
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 {% endblock %}
 {% block content %}
@@ -21,6 +21,7 @@
 
     </form>
     <select class="nameList">
+      <option selected="selected" disabled hidden>Select a user...</option>
     </select>
   </nav>
   <section class="rooms">
