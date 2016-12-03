@@ -1,15 +1,14 @@
 $(document).ready(function() {
   var socket = io.connect();
 
+  // 0. 连接
   socket.on('connect', function() {
     socket.send('User connected.');
     console.log('Yeah! Connected!');
+    console.log(socket);
   });
 
-  socket.on('response name', function(name) {
-    $('.nameList').append('<option value="' + name.data + '">' + name.data + '</option>');
-  });
-
+  // 1. 回车发送name
   $('#myName').keyup(function(event){
     if (event.keyCode == 13) {
       socket.emit('my name', {data: $('#myName').val()});
@@ -19,28 +18,30 @@ $(document).ready(function() {
     }
   });
 
+  // 3. 接收服务器的name，放到user list中
   socket.on('my response', function(user) {
-    console.log(user);
     if (user.name === null) {
       return false;
     } else {
       $('.room').append('<p>Welcome, ' + user.name + '</p>');
-      $('.nameList').append('<option>' + user.name + '</option>');
+      $('.nameList').append('<option value="' + name.data + '">' + user.name + '</option>');
     }
   });
 
-  socket.on('message', function(msg) {
-    $('.room').append('<p>' + msg + '</p>');
+  // 4. 点击发送按钮，发送myMessage的值给服务器
+  $('#sendButton').on('click', function() {
+    socket.send($('#myMessage').val());
+    $('#myMessage').val('');
   });
-
+ // 回车相当于点发送按钮
   $('#myMessage').keyup(function(event){
     if(event.keyCode == 13) {
       $('#sendButton').click();
     }
   });
 
-  $('#sendButton').on('click', function() {
-    socket.send($('#myMessage').val());
-    $('#myMessage').val('');
+  // 6. 把从服务器收到的message放到.room里面
+  socket.on('message', function(msg) {
+    $('.room').append('<p>' + msg + '</p>');
   });
 });
