@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, session, render_template, request, url_for, redirect
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
+from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+from datetime import datetime
 # 为了生成动态密钥
 import os
 # 仅供调试使用，禁止生成pyc文件
@@ -15,6 +16,9 @@ socketio = SocketIO(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+# 房间们
+rooms_list = []
 
 # 定义User类，以便login_manager管理
 class User(UserMixin):
@@ -42,34 +46,28 @@ def index():
 
     return render_template('index.html')
 
-# 调试指令，查询是否登陆成功
-@app.route('/login')
-def login():
-    if current_user.id:
-        return current_user.id
-
-    return 'Not logged in!'
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    # session.pop('user', None)
-
-    return redirect(url_for('index'))
-
 # socketIO部分的代码
 # 0. 连接
 @socketio.on('connect')
 def connect_handler():
     if current_user.is_authenticated:
+        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' - client connected')
         emit('my response',
              {'name': current_user.id},
              broadcast=True)
+
+        rooms_list.extend(rooms())
+        print rooms_list
         # print the session ID
-        print request.sid
+        # join_room('public room')
+        # print request.sid
     else:
         return False
+
+@socketio.on('disconnect')
+def user_disconnect():
+    rooms_list.remove(rooms()[0])
+    print('Client disconnected')
 
 # 2. 接收客户端传来的name
 @socketio.on('my name')
@@ -88,5 +86,22 @@ def handle_message(msg):
 def enter_room(message):
     join_room(message['room'])
 
+# 调试指令，查询是否登陆成功
+@app.route('/login')
+def login():
+    if current_user.id:
+        return current_user.id
+
+    return 'Not logged in!'
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    # session.pop('user', None)
+
+    return redirect(url_for('index'))
+
+# 启动
 if __name__ == '__main__':
     socketio.run(app)
