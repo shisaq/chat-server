@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import eventlet
 from flask import Flask, session, render_template, request, url_for, redirect
 from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms
 from datetime import datetime
@@ -9,15 +10,27 @@ import sys
 sys.dont_write_bytecode = True
 
 # 初始化
-async_mode = 'eventlet'
+async_mode = "eventlet"
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 socketio = SocketIO(app, async_mode=async_mode)
 
-
 # 房间们
 rooms_list = []
+
+# 开启背景线程，用以持续发送用户名
+thread = None
+
+def background_thread():
+    """Example of how to send server generated events to clients."""
+    count = 0
+    while True:
+        print 'I am in!!!'
+        socketio.sleep(5)
+        count += 1
+        socketio.emit('update_list',
+                      {'data': 'Is this ok', 'count': count}, broadcast=True)
 
 
 # 首页和输入用户名后登陆
@@ -32,7 +45,11 @@ def index():
 # socketio事件
 @socketio.on('connect')
 def user_connect():
-    print 'The room ID is: ' + rooms()[0]
+    global thread
+    if thread is None:
+        thread = socketio.start_background_task(target=background_thread)
+    emit('update_list', {'data': 'Is this ok', 'count': 0}, broadcast=True)
+
     if 'user' in session:
         print 'The username is: ' + session['user']
         # session['room'] = request.sid
@@ -43,6 +60,7 @@ def user_connect():
     else:
         print 'No user now.'
     print 'The sid is: ' + request.sid
+    print '-------------------------------'
 
 # 下线
 @socketio.on('disconnect')
