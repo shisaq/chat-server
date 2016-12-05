@@ -12,13 +12,12 @@
     <form class="myNameBar" method="post">
       <label for="myName">Name: </label>
       <input type="text" name="username" id="myName"
-      {% if current_user.id != None %}
-        value="{{ current_user.id }}" readonly="true" style="color: grey;"
+      {% if session['user'] %}
+        value="{{ session['user'] }}" readonly="true" style="color: grey;"
       {% else %}
         value=""
       {% endif %}
       >
-
     </form>
     <select class="nameList">
       <option selected="selected" disabled hidden>Select a user...</option>

@@ -5,17 +5,7 @@ $(document).ready(function() {
   socket.on('connect', function() {
     socket.send('User connected.');
     console.log('Yeah! Connected!');
-    console.log(socket);
-  });
-
-  // 1. 回车发送name
-  $('#myName').keyup(function(event){
-    if (event.keyCode == 13) {
-      socket.emit('my name', {data: $('#myName').val()});
-      $('#myName').prop('readonly', true)
-                  .css('color', 'grey');
-      return false;
-    }
+    console.log(socket.id);
   });
 
   // 3. 接收服务器的name，放到user list中
