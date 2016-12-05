@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import eventlet
+eventlet.monkey_patch()
 from flask import Flask, session, render_template, request, url_for, redirect
 from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms
 from datetime import datetime
@@ -10,7 +11,7 @@ import sys
 sys.dont_write_bytecode = True
 
 # 初始化
-async_mode = "eventlet"
+async_mode = 'eventlet'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -30,7 +31,7 @@ def background_thread():
         socketio.sleep(5)
         count += 1
         socketio.emit('update_list',
-                      {'data': 'Is this ok', 'count': count}, broadcast=True)
+                      {'data': rooms_list, 'count': count}, broadcast=True)
 
 
 # 首页和输入用户名后登陆
@@ -48,7 +49,7 @@ def user_connect():
     global thread
     if thread is None:
         thread = socketio.start_background_task(target=background_thread)
-    emit('update_list', {'data': 'Is this ok', 'count': 0}, broadcast=True)
+    emit('update_list', {'data': rooms_list, 'count': 0}, broadcast=True)
 
     if 'user' in session:
         print 'The username is: ' + session['user']
@@ -61,6 +62,8 @@ def user_connect():
         print 'No user now.'
     print 'The sid is: ' + request.sid
     print '-------------------------------'
+    print 'Namespace is: '
+    print request.namespace
 
 # 下线
 @socketio.on('disconnect')
@@ -97,4 +100,4 @@ def logout():
 
 # 启动
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, DEBUG=True)

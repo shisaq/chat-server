@@ -20,6 +20,7 @@ $(document).ready(function() {
 
   socket.on('update_list', function(msg) {
     $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
+    console.log('really?');
   });
 
   // 4. 点击发送按钮，发送myMessage的值给服务器
