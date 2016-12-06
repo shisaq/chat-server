@@ -22,13 +22,9 @@ rooms_list = []
 
 # 开启背景线程，用以持续发送用户名
 def background_thread(user):
-    count = 0
     while True:
-        print user
         socketio.sleep(5)
-        count += 1
-        socketio.emit('update_list',
-                      {'data': user, 'count': count}, broadcast=True)
+        socketio.emit('update_list', {'data': user}, broadcast=True)
 
 
 # 首页和输入用户名后登陆
@@ -45,7 +41,7 @@ def index():
 def user_connect():
     if 'user' in session:
         session['thread'] = socketio.start_background_task(target=background_thread, user=session['user'])
-        emit('update_list', {'data': session['user'], 'count': 0}, broadcast=True)
+        emit('update_list', {'data': session['user']}, broadcast=True)
         print 'The username is: ' + session['user']
         # session['room'] = request.sid
         rooms_list.append(request.sid)
@@ -63,6 +59,7 @@ def user_connect():
 @socketio.on('disconnect')
 def user_disconnect():
     if 'user' in session:
+        session.pop('thread', None)
         rooms_list.remove(request.sid)
         print '----------rooms list-----------'
         print rooms_list

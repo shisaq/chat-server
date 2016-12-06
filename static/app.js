@@ -14,13 +14,17 @@ $(document).ready(function() {
       return false;
     } else {
       $('.room').append('<p>Welcome, ' + user.name + '</p>');
-      $('.nameList').append('<option value="' + name.data + '">' + user.name + '</option>');
+      $('#nameList').append('<option value="' + name.data + '">' + user.name + '</option>');
     }
   });
 
   socket.on('update_list', function(msg) {
-    $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
-    console.log('really?');
+    console.log($('.nameListItem[value=' + msg.data + ']').length);
+    if ($('.nameListItem[value=' + msg.data + ']').length === 0) {
+      console.log('inside loop');
+      $('#nameList').append('<option class="nameListItem" value="' + msg.data + '">' + msg.data + '</option>');
+    }
+    console.log('Done.');
   });
 
   // 4. 点击发送按钮，发送myMessage的值给服务器
