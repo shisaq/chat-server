@@ -21,17 +21,14 @@ socketio = SocketIO(app, async_mode=async_mode)
 rooms_list = []
 
 # 开启背景线程，用以持续发送用户名
-thread = None
-
-def background_thread():
-    """Example of how to send server generated events to clients."""
+def background_thread(user):
     count = 0
     while True:
-        print 'I am in!!!'
+        print user
         socketio.sleep(5)
         count += 1
         socketio.emit('update_list',
-                      {'data': rooms_list, 'count': count}, broadcast=True)
+                      {'data': user, 'count': count}, broadcast=True)
 
 
 # 首页和输入用户名后登陆
@@ -40,18 +37,15 @@ def index():
     if request.method == 'POST' and request.form['username'] != None:
         session['user'] = request.form['username']
 
-    return render_template('index.html', async_mode=socketio.async_mode)
+    return render_template('index.html')
 
 
 # socketio事件
 @socketio.on('connect')
 def user_connect():
-    global thread
-    if thread is None:
-        thread = socketio.start_background_task(target=background_thread)
-    emit('update_list', {'data': rooms_list, 'count': 0}, broadcast=True)
-
     if 'user' in session:
+        session['thread'] = socketio.start_background_task(target=background_thread, user=session['user'])
+        emit('update_list', {'data': session['user'], 'count': 0}, broadcast=True)
         print 'The username is: ' + session['user']
         # session['room'] = request.sid
         rooms_list.append(request.sid)
@@ -100,4 +94,4 @@ def logout():
 
 # 启动
 if __name__ == '__main__':
-    socketio.run(app, DEBUG=True)
+    socketio.run(app, debug=True)
