@@ -69,10 +69,7 @@ def user_disconnect():
 # 5. 处理客户端传来的message
 @socketio.on('message')
 def handle_message(msg):
-    if session.get('user'):
-        print('Message: ' + msg)
-        final = '{0}'.format(session.get('user')) + ': ' + msg
-        send(final, broadcast=True)
+    print('Message: ' + msg)
 
 
 # 调试指令，查询是否登陆成功
