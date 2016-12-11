@@ -1,0 +1,5 @@
+/venv
+.DS_Store
+*.pyc
+/node_modules
+/static/main.min.js
