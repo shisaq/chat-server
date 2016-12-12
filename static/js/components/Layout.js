@@ -3,11 +3,14 @@ import React from "react";
 import Header from "./Header";
 import Rooms from "./Rooms";
 
-const containerStyle = {
-    border: '1px solid skyblue',
-    width: 1000,
-    maxWidth: '100%',
-    margin: '20px auto'
+const styles = {
+    containerStyle: {
+        maxWidth: '100%',
+        margin: '20px auto',
+    },
+    titleStyle: {
+        paddingLeft: 20
+    }
 };
 
 export default class Layout extends React.Component {
@@ -17,8 +20,8 @@ export default class Layout extends React.Component {
 
     render() {
         return(
-            <div id="container" style={containerStyle}>
-                <h1>Chat Server</h1>
+            <div id="container" style={styles.containerStyle}>
+                <h1 style={styles.titleStyle}>Chat Server</h1>
                 <Header />
                 <Rooms />
             </div>

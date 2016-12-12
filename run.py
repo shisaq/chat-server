@@ -38,6 +38,7 @@ def user_disconnect():
 @socketio.on('joined')
 def user_joined(name):
     print('User [' + name + '] joined, welcome.' + ' - ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    emit('online_name', name, broadcast=True)
 
 # 处理客户端传来的message
 @socketio.on('message')

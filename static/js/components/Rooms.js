@@ -3,11 +3,9 @@ import React from "react";
 import Room from "./Room";
 
 const roomsStyle =  {
-    border: '2px solid salmon',
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: 15,
-    margin: '10px auto',
+    width: '100%',
+    margin: '20px auto',
+    padding: '20px',
     listStyle: 'none'
 };
 

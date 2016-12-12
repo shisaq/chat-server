@@ -5,16 +5,23 @@ import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import CloseButton from 'material-ui/svg-icons//navigation/close';
 import Paper from 'material-ui/Paper';
+import {cyan100, cyan500} from 'material-ui/styles/colors';
 
 const styles = {
-    paperStyle: {
-        margin: 10
-    },
     roomStyle: {
-        width: '30%',
+        width: '33%',
+        display: 'inline-block',
         minWidth: 300,
+        padding: 10
+    },
+    paperStyle: {
         height: 400,
-        position: 'relative'
+        position: 'relative',
+    },
+    cardHeaderStyle: {
+        backgroundColor: cyan100,
+        paddingTop: 10,
+        paddingBottom: 10
     },
     closeStyle: {
         position: 'absolute',
@@ -22,10 +29,8 @@ const styles = {
         right: 0
     },
     chatRecord: {
-        width: '30%',
-        minWidth: 300,
         height: 270,
-        border: '2px solid blue',
+        padding: 5,
         overflowY: 'auto'
     },
     inputArea: {
@@ -43,7 +48,7 @@ const styles = {
     sendButtonStyle: {
         minWidth: 30,
         color: '#fff',
-        backgroundColor: '#00bcd4'
+        backgroundColor: cyan500
     }
 };
 
@@ -54,31 +59,43 @@ export default class Room extends React.Component {
 
     render() {
         return(
-            <Paper style={styles.paperStyle} zDepth={2}>
             <li class="room" style={styles.roomStyle}>
-                <Card>
-                    <CardHeader
-                        title="With Foo"
-                        subtitle="Chatting..."
-                    />
-                    <IconButton style={styles.closeStyle}>
-                        <CloseButton />
-                    </IconButton>
-                    <div style={styles.chatRecord}></div>
-                    <TextField
-                        style={styles.inputArea}
-                        hintText="message"
-                        floatingLabelText="Press enter to send"
-                    />
-                    <CardActions style={styles.sendArea}>
-                        <FlatButton
-                            style={styles.sendButtonStyle}
-                            label="send"
+                <Paper style={styles.paperStyle} zDepth={2}>
+                    <Card>
+                        <CardHeader
+                            title="With Foo"
+                            subtitle="Chatting..."
+                            style={styles.cardHeaderStyle}
                         />
-                    </CardActions>
-                </Card>
+                        <IconButton style={styles.closeStyle}>
+                            <CloseButton />
+                        </IconButton>
+                        <div style={styles.chatRecord}>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                            <h1>Wow</h1>
+                        </div>
+                        <TextField
+                            style={styles.inputArea}
+                            hintText="message"
+                            floatingLabelText="Press enter to send"
+                        />
+                        <CardActions style={styles.sendArea}>
+                            <FlatButton
+                                style={styles.sendButtonStyle}
+                                label="send"
+                            />
+                        </CardActions>
+                    </Card>
+                </Paper>
             </li>
-            </Paper>
         );
     }
 }

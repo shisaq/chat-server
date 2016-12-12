@@ -1,12 +1,14 @@
 import React from "react";
 import DropDownMenu from "material-ui/DropDownMenu";
 import MenuItem from "material-ui/MenuItem";
+import { socketConnect } from 'socket.io-react';
 
 const styles = {
     userListStyle: {
         width: '50%',
         position: 'relative',
-        top: -15
+        top: -15,
+        right: 10
     },
     dropDownStyles: {
         width: 300,
@@ -14,6 +16,7 @@ const styles = {
     }
 };
 
+@socketConnect
 export default class UserList extends React.Component {
     constructor(props) {
         super(props);
@@ -23,6 +26,9 @@ export default class UserList extends React.Component {
     handleChange = (event, index, value) => this.setState({value});
 
     render() {
+        this.props.socket.on('online_name', function(name) {
+            console.log(name);
+        });
         return (
             <div style={styles.userListStyle}>
                 <label>Start a Conversation:</label>
