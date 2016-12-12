@@ -19,11 +19,8 @@ socketio = SocketIO(app, async_mode=async_mode)
 
 
 # 首页和输入用户名后登陆
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if request.method == 'POST' and request.form['username'] != None:
-        session['user'] = request.form['username']
-
     return render_template('index.html')
 
 

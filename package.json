@@ -18,14 +18,15 @@
     "react-dom": "^0.14.8",
     "react-tap-event-plugin": "^0.2.2",
     "socket.io-client": "^1.7.2",
-    "socket.io-react": "^1.1.1",
+    "socket.io-react": "^1.1.2",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   },
   "devDependencies": {},
   "scripts": {
     "dev": "webpack-dev-server --content-base static --inline --hot",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production webpack"
   },
   "author": "Haiquan Li",
   "license": "ISC"

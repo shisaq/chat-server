@@ -1,5 +1,6 @@
 import React from "react";
 import Paper from 'material-ui/Paper';
+import { socketConnect } from 'socket.io-react';
 
 import Name from "./Name";
 import UserList from "./UserList";
@@ -16,12 +17,19 @@ const styles = {
     }
 };
 
+@socketConnect
 export default class Header extends React.Component {
     constructor() {
         super();
         this.state = {
             name: ''
         };
+    }
+
+    emitMessage() {
+        console.log(this.props);
+        console.log(this.props.socket.id);
+        this.props.socket.emit('message', 'hello world!');
     }
 
     addName(name) {
@@ -35,6 +43,9 @@ export default class Header extends React.Component {
                 <Name addName={this.addName.bind(this)} name={this.state.name} />
                 <UserList />
             </header>
+            <button onClick={this.emitMessage.bind(this)}>
+                Send!
+            </button>
             </Paper>
         );
     }
