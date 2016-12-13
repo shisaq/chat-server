@@ -5,11 +5,11 @@ import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import CloseButton from 'material-ui/svg-icons//navigation/close';
 import Paper from 'material-ui/Paper';
-import {cyan100, cyan500} from 'material-ui/styles/colors';
+import {cyan100, cyan500, grey100} from 'material-ui/styles/colors';
 
 const styles = {
     roomStyle: {
-        width: '33%',
+        width: '33.3%',
         display: 'inline-block',
         minWidth: 300,
         padding: 10
@@ -17,6 +17,7 @@ const styles = {
     paperStyle: {
         height: 400,
         position: 'relative',
+        backgroundColor: grey100
     },
     cardHeaderStyle: {
         backgroundColor: cyan100,
@@ -31,6 +32,7 @@ const styles = {
     chatRecord: {
         height: 290,
         padding: 5,
+        backgroundColor: grey100,
         overflowY: 'auto'
     },
     inputArea: {

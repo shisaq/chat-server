@@ -1,12 +1,14 @@
 import React from "react";
+import {grey100} from 'material-ui/styles/colors';
 
 import Header from "./Header";
 import Rooms from "./Rooms";
 
 const styles = {
     containerStyle: {
-        maxWidth: '100%',
+        width: '100%',
         margin: '20px auto',
+        backgroundColor: grey100
     },
     titleStyle: {
         paddingLeft: 20
