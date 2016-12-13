@@ -15,17 +15,21 @@ export default class Rooms extends React.Component {
     }
 
     render() {
+        const roomList = [
+            <Room key={1}/>,
+            <Room key={2}/>,
+            <Room key={3}/>,
+            <Room key={4}/>,
+            <Room key={5}/>,
+            <Room key={6}/>,
+            <Room key={7}/>,
+            <Room key={8}/>
+        ];
+
         return(
             <div>
                 <ul class="rooms" style={roomsStyle}>
-                    <Room />
-                    <Room />
-                    <Room />
-                    <Room />
-                    <Room />
-                    <Room />
-                    <Room />
-                    <Room />
+                    {roomList}
                 </ul>
             </div>
         );

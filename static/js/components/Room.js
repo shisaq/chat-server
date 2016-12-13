@@ -29,7 +29,7 @@ const styles = {
         right: 0
     },
     chatRecord: {
-        height: 270,
+        height: 290,
         padding: 5,
         overflowY: 'auto'
     },
@@ -47,7 +47,6 @@ const styles = {
     },
     sendButtonStyle: {
         minWidth: 30,
-        color: '#fff',
         backgroundColor: cyan500
     }
 };

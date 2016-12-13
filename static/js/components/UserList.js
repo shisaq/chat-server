@@ -11,7 +11,7 @@ const styles = {
         right: 10
     },
     dropDownStyles: {
-        width: 300,
+        width: 240,
         top: 20
     }
 };
@@ -20,12 +20,21 @@ const styles = {
 export default class UserList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: 1};
+        this.state = {value: 'Select a user...'};
     }
 
     handleChange = (event, index, value) => this.setState({value});
 
     render() {
+        const usernames = [
+            'Select a user...',
+            'Jing',
+            'Q',
+            'Foo',
+            'Bar',
+            'Baz'
+        ].map((name, i) => <MenuItem key={i} value={name} primaryText={name} />);
+
         this.props.socket.on('online_name', function(name) {
             console.log(name);
         });
@@ -38,11 +47,7 @@ export default class UserList extends React.Component {
                     style={styles.dropDownStyles}
                     maxHeight={300}
                 >
-                    <MenuItem value={1} primaryText="Select a user..." />
-                    <MenuItem value={2} primaryText="Every Night" />
-                    <MenuItem value={3} primaryText="Weeknights" />
-                    <MenuItem value={4} primaryText="Weekends" />
-                    <MenuItem value={5} primaryText="Weekly" />
+                    {usernames}
                 </DropDownMenu>
             </div>
         );
