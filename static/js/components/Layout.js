@@ -30,13 +30,3 @@ export default class Layout extends React.Component {
         );
     }
 }
-
-// const Layout = (props) => (
-//     <div id="container" class="onepcssgrid-1000">
-//          <h1>Chat Server</h1>
-//          <Header />
-//          <Rooms />
-//     </div>
-// );
-
-// export default muiThemeable()(Layout);

@@ -19,6 +19,7 @@ const styles = {
     }
 };
 
+
 @socketConnect
 export default class Header extends React.Component {
     constructor() {

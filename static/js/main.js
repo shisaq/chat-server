@@ -9,11 +9,6 @@ import io from 'socket.io-client';
 import Layout from "./components/Layout";
 
 const socket = io.connect(process.env.SOCKET_URL);
-socket.on('connect', function() {
-    socket.emit('message', 'A new user connected.');
-    console.log('Successfully connected to the server!');
-    console.log(socket.id);
-});
 
 const App = () => (
     <MuiThemeProvider>

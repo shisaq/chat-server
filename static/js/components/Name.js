@@ -1,5 +1,6 @@
 import React from "react";
 import TextField from 'material-ui/TextField';
+import ReactTimeout from 'react-timeout';
 import { socketConnect } from 'socket.io-react';
 import {cyan100, cyan500} from 'material-ui/styles/colors';
 
@@ -21,6 +22,7 @@ const styles = {
     }
 };
 
+@ReactTimeout
 @socketConnect
 export default class Name extends React.Component {
     constructor() {
@@ -39,12 +41,18 @@ export default class Name extends React.Component {
     handleKeyPress(e) {
         // when press enter, we send the name with disabling input
         if (e.key === 'Enter' && e.target.value) {
-            this.props.socket.emit('joined', e.target.value);
-            console.log('Your name has been sent to the server.');
             this.setState({
                 disabled: true,
                 floatingText: ' '
             });
+            const self = this;
+            this.props.setInterval(
+                () => {self.props.socket.emit(
+                    'is_online',
+                    self.props.name);
+                },
+            3000);
+            console.log('Your name has been sent to the server.');
         }
     }
 

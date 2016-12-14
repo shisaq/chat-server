@@ -35,9 +35,9 @@ def user_disconnect():
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' - Client disconnected.')
 
 # 输入用户名后按回车
-@socketio.on('joined')
+@socketio.on('is_online')
 def user_joined(name):
-    print('User [' + name + '] joined, welcome.' + ' - ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    print('User [' + name + '] is online. I will check every 3 seconds.' + ' - ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     emit('online_name', name, broadcast=True)
 
 # 处理客户端传来的message
