@@ -6,3 +6,9 @@ export function pushName(name) {
         name
     });
 }
+
+export function popName() {
+    dispatcher.dispatch({
+        type: 'POP_USERNAME'
+    });
+}

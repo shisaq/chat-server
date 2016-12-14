@@ -2,7 +2,6 @@ import React from "react";
 import DropDownMenu from "material-ui/DropDownMenu";
 import MenuItem from "material-ui/MenuItem";
 import ReactTimeout from 'react-timeout';
-import { socketConnect } from 'socket.io-react';
 
 import * as UsersListActions from '../actions/UsersListActions';
 import UsersStore from '../stores/UsersStore';
@@ -21,7 +20,6 @@ const styles = {
 };
 
 @ReactTimeout
-@socketConnect
 export default class UserList extends React.Component {
     constructor() {
         super();
@@ -40,6 +38,11 @@ export default class UserList extends React.Component {
             });
         });
 
+        this.props.socket.on('connect', function() {
+            UsersListActions.popName();
+            console.log('Now I am heading to action: popName.');
+        })
+
         this.props.socket.on('online_name', function(name) {
             UsersListActions.pushName(name);
             console.log('online name [' + name + '] has been received by UsersListActions.');
@@ -55,35 +58,6 @@ export default class UserList extends React.Component {
         const usernamesComponents = usersList.map((user) => {
             return <MenuItem key={user.name} value={user.name} primaryText={user.name} />;
         });
-
-        // socket.on('connect', function() {
-        //     socket.emit('message', 'A new user connected.');
-        //     console.log('Successfully connected to the server!');
-        //     console.log(socket.id);
-
-        //     self.props.setInterval(
-        //         () => {
-        //             for(var i = 1; i < usernames.length; i++) {
-        //                 if(Date.now() - usernames[i].props.timeStamp > 3500) {
-        //                     console.log('I will pop this:' + usernames[i].props.value);
-        //                     usernames.pop(usernames[i]);
-        //                 }
-        //             }
-        //         },
-        //     3000);
-        // });
-
-        // socket.on('online_name', function(name) {
-        //     for (var i = 1; i < usersList.length; i++) {
-        //         if(usersList[i].name === name) {
-        //             usernames[i].timeStamp = Date.now();
-        //             return;
-        //         }
-        //     }
-        //     usernames.push(<MenuItem key={name} value={name} primaryText={name} timeStamp={Date.now()} />);
-        //     console.log(usernames);
-        //     console.log('now I am in the if statement. I have pushed [' + name + '] into the userlist.');
-        // });
 
         return (
             <div style={styles.userListStyle}>

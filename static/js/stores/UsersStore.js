@@ -31,6 +31,20 @@ class UsersStore extends EventEmitter {
         this.emit('updateUsersList');
     }
 
+    popUsername() {
+        setInterval(
+            () => {
+                for(var i = 1; i < this.usersList.length; i++) {
+                    if (Date.now() - this.usersList[i].timeStamp > 3500) {
+                        this.usersList.splice(i, 1);
+                        console.log('This user is offline. So, byebye.');
+                        this.emit('updateUsersList');
+                    }
+                }
+            },
+        3000);
+    }
+
     getAll() {
         return this.usersList;
     }
@@ -39,6 +53,9 @@ class UsersStore extends EventEmitter {
         switch(action.type) {
             case 'PUSH_USERNAME': {
                 this.getUsername(action.name);
+            }
+            case 'POP_USERNAME': {
+                this.popUsername();
             }
         }
     }
