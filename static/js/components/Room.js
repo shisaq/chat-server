@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardHeader} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
@@ -39,17 +39,8 @@ const styles = {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        width: 195,
-        paddingLeft: 5
-    },
-    sendArea: {
-        position: 'absolute',
-        bottom: 0,
-        right: -8,
-    },
-    sendButtonStyle: {
-        minWidth: 30,
-        backgroundColor: cyan500
+        right: 0,
+        paddingLeft: 10
     }
 };
 
@@ -93,12 +84,6 @@ export default class Room extends React.Component {
                             hintText="message"
                             floatingLabelText="Press enter to send"
                         />
-                        <CardActions style={styles.sendArea}>
-                            <FlatButton
-                                style={styles.sendButtonStyle}
-                                label="send"
-                            />
-                        </CardActions>
                     </Card>
                 </Paper>
             </li>
