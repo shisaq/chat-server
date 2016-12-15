@@ -17,7 +17,6 @@ class UsersStore extends EventEmitter {
         for(var i = 1; i < this.usersList.length; i++) {
             if (name === this.usersList[i].name) {
                 this.usersList[i].timeStamp = Date.now();
-                console.log('name equals.');
                 this.emit('updateUsersList');
                 return;
             }

@@ -40,6 +40,20 @@ def user_joined(name):
     print('User [' + name + '] is online. I will check every 3 seconds.' + ' - ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     emit('online_name', name, broadcast=True)
 
+# 用户inviter在列表中选择guest聊天，双方加入房间
+@socketio.on('build_private_room')
+def creat_private_room(names):
+    print('The inviter is: [' + names['inviter'] + '], the guest is: [' + names['guest'] + ']')
+    r = [names['inviter'], names['guest']]
+    r.sort()
+    room = ''.join(r)
+    join_room(room)
+    emit('invite_match_user', {
+        'inviter': names['inviter'],
+        'guest': names['guest'],
+        'room': room
+    }, broadcast=True)
+
 # 处理客户端传来的message
 @socketio.on('message')
 def handle_message(msg):

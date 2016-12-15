@@ -1,6 +1,9 @@
 import React from "react";
+import { socketConnect } from 'socket.io-react';
 
 import Room from "./Room";
+import RoomStore from '../stores/RoomStore';
+import * as RoomActions from '../actions/RoomActions';
 
 const roomsStyle =  {
     width: '100%',
@@ -9,27 +12,39 @@ const roomsStyle =  {
     listStyle: 'none'
 };
 
+@socketConnect
 export default class Rooms extends React.Component {
     constructor() {
         super();
+        this.state = {
+            rooms: RoomStore.getAll()
+        };
+    }
+
+    componentWillMount() {
+        RoomStore.on('addNewRoom', () => {
+            this.setState({
+                rooms: RoomStore.getAll()
+            });
+        });
+
+        this.props.socket.on('invite_match_user', (data) => {
+            RoomActions.matchUser(data);
+            console.log('Let\'s go and see if the username belongs to the room!');
+        });
     }
 
     render() {
-        const roomList = [
-            <Room key={1}/>,
-            <Room key={2}/>,
-            <Room key={3}/>,
-            <Room key={4}/>,
-            <Room key={5}/>,
-            <Room key={6}/>,
-            <Room key={7}/>,
-            <Room key={8}/>
-        ];
+        const {rooms} = this.state;
+        const roomComponents = rooms.map((data) => {
+            console.log('key', data.room);
+            return <Room key={data.room} />;
+        });
 
         return(
             <div>
                 <ul class="rooms" style={roomsStyle}>
-                    {roomList}
+                    {roomComponents}
                 </ul>
             </div>
         );

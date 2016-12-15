@@ -34,8 +34,8 @@ export default class Name extends React.Component {
     }
 
     handleChange(e) {
-        const name = e.target.value;
-        this.props.pushName(name);
+        localStorage.name = e.target.value;
+        this.props.pushName(localStorage.name);
     }
 
     handleKeyPress(e) {

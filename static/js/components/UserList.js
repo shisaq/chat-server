@@ -4,7 +4,6 @@ import MenuItem from "material-ui/MenuItem";
 import ReactTimeout from 'react-timeout';
 import { socketConnect } from 'socket.io-react';
 
-
 import * as UsersListActions from '../actions/UsersListActions';
 import UsersStore from '../stores/UsersStore';
 
@@ -32,7 +31,17 @@ export default class UserList extends React.Component {
         };
     }
 
-    handleChange = (event, index, value) => this.setState({currentName: value});
+    handleChange = (event, index, value) => {
+        this.setState({currentName: value});
+        if (value !== localStorage.name) {
+            this.props.socket.emit('build_private_room', {
+                inviter: localStorage.name,
+                guest: value
+            });
+        } else {
+            alert('You can talk to yourself directly.');
+        }
+    }
 
     componentWillMount() {
         UsersStore.on('updateUsersList', () => {
@@ -41,14 +50,13 @@ export default class UserList extends React.Component {
             });
         });
 
-        this.props.socket.on('connect', function() {
+        this.props.socket.on('connect', () => {
             UsersListActions.popName();
             console.log('Now I am heading to action: popName.');
-        })
+        });
 
-        this.props.socket.on('online_name', function(name) {
+        this.props.socket.on('online_name', (name) => {
             UsersListActions.pushName(name);
-            console.log('online name [' + name + '] has been received by UsersListActions.');
         });
 
     }
