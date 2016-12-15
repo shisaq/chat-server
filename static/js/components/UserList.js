@@ -33,13 +33,13 @@ export default class UserList extends React.Component {
 
     handleChange = (event, index, value) => {
         this.setState({currentName: value});
-        if (value !== localStorage.name) {
+        if (value !== localStorage.name && value !== 'Select a user...') {
             this.props.socket.emit('build_private_room', {
                 inviter: localStorage.name,
                 guest: value
             });
         } else {
-            alert('You can talk to yourself directly.');
+            console.log('You can talk to yourself directly.');
         }
     }
 
