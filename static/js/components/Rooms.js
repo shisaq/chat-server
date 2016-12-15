@@ -39,8 +39,7 @@ export default class Rooms extends React.Component {
     render() {
         const {rooms} = this.state;
         const roomComponents = rooms.map((data) => {
-            console.log('key', data.room);
-            return <Room key={data.room} />;
+            return <Room key={data.room} info={data} />;
         });
 
         return(

@@ -59,13 +59,17 @@ export default class Room extends React.Component {
     }
 
     render() {
-        console.log(this);
+        const { info } = this.props;
+        console.log('room info', info);
+        console.log('client name', localStorage.name);
+        const oppositeName =
+            (info.inviter === localStorage.name) ? info.guest : info.inviter;
         return(
             <li class="room" style={styles.roomStyle}>
                 <Paper style={styles.paperStyle} zDepth={2}>
                     <Card>
                         <CardHeader
-                            title="With Foo"
+                            title={oppositeName}
                             subtitle="Chatting..."
                             style={styles.cardHeaderStyle}
                         />
