@@ -59,6 +59,7 @@ export default class Room extends React.Component {
     }
 
     render() {
+        console.log(this);
         return(
             <li class="room" style={styles.roomStyle}>
                 <Paper style={styles.paperStyle} zDepth={2}>

@@ -15,23 +15,23 @@ class RoomStore extends EventEmitter {
     matchUser(data) {
         console.log('data from matchUser', data);
         for (var i = 0; i < this.rooms.length; i++) {
-            if (data.data.room === this.rooms[i].room) {
+            if (data.room === this.rooms[i].room) {
                 console.log('This room has already been there.');
                 return;
             }
         }
-        if (localStorage.name === data.data.inviter ||
-            localStorage.name === data.data.guest) {
+        if (localStorage.name === data.inviter ||
+            localStorage.name === data.guest) {
             console.log('Ready to make a new room out!!!');
-            this.rooms.push(data.data);
-            this.emit('addNewRoom', data.data);
+            this.rooms.push(data);
+            this.emit('addNewRoom', data);
         }
     }
 
     handleActions(action) {
         switch(action.type) {
             case 'MATCH_USER': {
-                this.matchUser(action);
+                this.matchUser(action.data);
             }
         }
     }
