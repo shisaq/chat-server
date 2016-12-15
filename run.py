@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import eventlet
 eventlet.monkey_patch()
-from flask import Flask, session, render_template, request, url_for, redirect
-from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit, join_room, leave_room, rooms
 from datetime import datetime
 # 为了生成动态密钥
 import os
@@ -52,31 +52,11 @@ def creat_private_room(names):
         'room': room
     }, broadcast=True)
 
-# 用户匹配用户名后，剩下2名用户加入房间
+# 客户端根据名字筛选，匹配的2名用户加入房间
 @socketio.on('join_private_room')
 def the_private_room(data):
     join_room(data['room'])
     print('Users: ' + data['inviter'] + ', ' + data['guest'] + ' joined the room [' + data['room'] + '].')
-
-# 处理客户端传来的message
-@socketio.on('message')
-def handle_message(msg):
-    print('Message: ' + msg + ' - ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
-
-# 调试指令，查询是否登陆成功
-@app.route('/login')
-def login():
-    if session.get('user'):
-        return session.get('user')
-
-    return 'Not logged in!'
-
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-
-    return redirect(url_for('index'))
 
 # 启动
 if __name__ == '__main__':

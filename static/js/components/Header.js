@@ -29,12 +29,6 @@ export default class Header extends React.Component {
         };
     }
 
-    emitMessage() {
-        console.log(this.props);
-        console.log(this.props.socket.id);
-        this.props.socket.emit('message', 'hello world!');
-    }
-
     pushName(name) {
         this.setState({name});
     }
@@ -46,9 +40,6 @@ export default class Header extends React.Component {
                 <Name pushName={this.pushName.bind(this)} name={this.state.name} />
                 <UserList />
             </header>
-            <button onClick={this.emitMessage.bind(this)}>
-                Send!
-            </button>
             </Paper>
         );
     }
