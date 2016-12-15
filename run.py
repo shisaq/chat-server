@@ -37,7 +37,6 @@ def user_disconnect():
 # 输入用户名后按回车
 @socketio.on('is_online')
 def user_joined(name):
-    print('User [' + name + '] is online. I will check every 3 seconds.' + ' - ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     emit('online_name', name, broadcast=True)
 
 # 用户inviter在列表中选择guest聊天，双方加入房间
@@ -47,12 +46,17 @@ def creat_private_room(names):
     r = [names['inviter'], names['guest']]
     r.sort()
     room = ''.join(r)
-    join_room(room)
     emit('invite_match_user', {
         'inviter': names['inviter'],
         'guest': names['guest'],
         'room': room
     }, broadcast=True)
+
+# 用户匹配用户名后，剩下2名用户加入房间
+@socketio.on('join_private_room')
+def the_private_room(data):
+    join_room(data['room'])
+    print('Users: ' + data['inviter'] + ', ' + data['guest'] + ' joined the room [' + data['room'] + '].')
 
 # 处理客户端传来的message
 @socketio.on('message')

@@ -22,10 +22,12 @@ export default class Rooms extends React.Component {
     }
 
     componentWillMount() {
-        RoomStore.on('addNewRoom', () => {
+        RoomStore.on('addNewRoom', (data) => {
             this.setState({
                 rooms: RoomStore.getAll()
             });
+            console.log('1 room and 2 users have been comfirmed. Now join them into the room.');
+            this.props.socket.emit('join_private_room', data);
         });
 
         this.props.socket.on('invite_match_user', (data) => {

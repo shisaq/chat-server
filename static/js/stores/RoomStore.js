@@ -24,7 +24,7 @@ class RoomStore extends EventEmitter {
             localStorage.name === data.data.guest) {
             console.log('Ready to make a new room out!!!');
             this.rooms.push(data.data);
-            this.emit('addNewRoom');
+            this.emit('addNewRoom', data.data);
         }
     }
 
