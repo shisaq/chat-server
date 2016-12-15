@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 
 import dispatcher from '../dispatcher';
 
-class RoomStore extends EventEmitter {
+class RoomsStore extends EventEmitter {
     constructor() {
         super();
         this.rooms = [];
@@ -37,6 +37,6 @@ class RoomStore extends EventEmitter {
     }
 }
 
-const roomStore = new RoomStore;
-dispatcher.register(roomStore.handleActions.bind(roomStore));
-export default roomStore;
+const roomsStore = new RoomsStore;
+dispatcher.register(roomsStore.handleActions.bind(roomsStore));
+export default roomsStore;

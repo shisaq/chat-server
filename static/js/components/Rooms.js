@@ -2,8 +2,8 @@ import React from "react";
 import { socketConnect } from 'socket.io-react';
 
 import Room from "./Room";
-import RoomStore from '../stores/RoomStore';
-import * as RoomActions from '../actions/RoomActions';
+import RoomsStore from '../stores/RoomsStore';
+import * as RoomsActions from '../actions/RoomsActions';
 
 const roomsStyle =  {
     width: '100%',
@@ -17,21 +17,21 @@ export default class Rooms extends React.Component {
     constructor() {
         super();
         this.state = {
-            rooms: RoomStore.getAll()
+            rooms: RoomsStore.getAll()
         };
     }
 
     componentWillMount() {
-        RoomStore.on('addNewRoom', (data) => {
+        RoomsStore.on('addNewRoom', (data) => {
             this.setState({
-                rooms: RoomStore.getAll()
+                rooms: RoomsStore.getAll()
             });
             console.log('1 room and 2 users have been comfirmed. Now join them into the room.');
             this.props.socket.emit('join_private_room', data);
         });
 
         this.props.socket.on('invite_match_user', (data) => {
-            RoomActions.matchUser(data);
+            RoomsActions.matchUser(data);
             console.log('Let\'s go and see if the username belongs to the room!');
         });
     }
