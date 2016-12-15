@@ -1,4 +1,5 @@
 import React from "react";
+import { socketConnect } from 'socket.io-react';
 import {Card, CardHeader} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
@@ -44,17 +45,36 @@ const styles = {
     }
 };
 
+@socketConnect
 export default class Room extends React.Component {
     constructor() {
         super();
+    }
+
+    handleKeyPress(e) {
+        if (e.key === 'Enter' && e.target.value) {
+            console.log('I will send this message to the server.');
+            this.props.socket.emit('private_message', {
+                msg: localStorage.name + ': ' + e.target.value,
+                room: this.props.info.room
+            });
+            e.target.value = '';
+        }
+    }
+
+    componentWillMount() {
+        this.props.socket.on('room_message', (msg) => {
+            console.log('Only me receive the message.');
+            console.log(msg);
+        });
     }
 
     render() {
         const { info } = this.props;
         console.log('room info', info);
         console.log('client name', localStorage.name);
-        const oppositeName =
-            (info.inviter === localStorage.name) ? info.guest : info.inviter;
+        const oppositeName = (info.inviter === localStorage.name) ?
+                             info.guest : info.inviter;
         return(
             <li class="room" style={styles.roomStyle}>
                 <Paper style={styles.paperStyle} zDepth={2}>
@@ -83,6 +103,7 @@ export default class Room extends React.Component {
                             style={styles.inputArea}
                             hintText="message"
                             floatingLabelText="Press enter to send"
+                            onKeyPress={this.handleKeyPress.bind(this)}
                         />
                     </Card>
                 </Paper>

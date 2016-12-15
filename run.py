@@ -58,6 +58,11 @@ def the_private_room(data):
     join_room(data['room'])
     print('Users: ' + data['inviter'] + ', ' + data['guest'] + ' joined the room [' + data['room'] + '].')
 
+# 用户在房间发送消息
+@socketio.on('private_message')
+def handle_message(data):
+    emit('room_message', data['msg'], room=data['room'])
+
 # 启动
 if __name__ == '__main__':
     socketio.run(app, debug=True)
