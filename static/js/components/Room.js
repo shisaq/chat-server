@@ -8,6 +8,9 @@ import CloseButton from 'material-ui/svg-icons//navigation/close';
 import Paper from 'material-ui/Paper';
 import {cyan100, cyan500, grey100} from 'material-ui/styles/colors';
 
+import RoomMsgStore from '../stores/RoomMsgStore';
+import * as RoomMsgActions from '../actions/RoomMsgActions';
+
 const styles = {
     roomStyle: {
         width: '33.3%',
@@ -49,6 +52,9 @@ const styles = {
 export default class Room extends React.Component {
     constructor() {
         super();
+        this.state = {
+            messages: RoomMsgStore.getAll()
+        };
     }
 
     handleKeyPress(e) {
@@ -63,18 +69,29 @@ export default class Room extends React.Component {
     }
 
     componentWillMount() {
-        this.props.socket.on('room_message', (msg) => {
+        this.props.socket.on('room_message', (data) => {
             console.log('Only me receive the message.');
-            console.log(msg);
+            console.log(data);
+            RoomMsgActions.sendMessage(data);
+        });
+
+        RoomMsgStore.on('pushNewMsg', () => {
+            this.setState({
+                messages: RoomMsgStore.getAll()
+            });
         });
     }
 
     render() {
+        const { messages } = this.state;
         const { info } = this.props;
-        console.log('room info', info);
-        console.log('client name', localStorage.name);
         const oppositeName = (info.inviter === localStorage.name) ?
                              info.guest : info.inviter;
+        messages[info.room] = messages[info.room] || [];
+        const msgComponent = messages[info.room].map((msg, index) => {
+            return <p key={index}>{msg}</p>;
+        });
+
         return(
             <li class="room" style={styles.roomStyle}>
                 <Paper style={styles.paperStyle} zDepth={2}>
@@ -88,19 +105,11 @@ export default class Room extends React.Component {
                             <CloseButton />
                         </IconButton>
                         <div style={styles.chatRecord}>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
-                            <h1>Wow</h1>
+                            {msgComponent}
                         </div>
                         <TextField
                             style={styles.inputArea}
+                            autoFocus={true}
                             hintText="message"
                             floatingLabelText="Press enter to send"
                             onKeyPress={this.handleKeyPress.bind(this)}

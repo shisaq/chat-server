@@ -1,0 +1,32 @@
+import { EventEmitter } from 'events';
+
+import dispatcher from '../dispatcher';
+
+class RoomMsgStore extends EventEmitter {
+    constructor() {
+        super();
+        this.msgs = {};
+    }
+
+    getAll() {
+        return this.msgs;
+    }
+
+    updateMsg(data) {
+        this.msgs[data.room] = this.msgs[data.room] || [];
+        this.msgs[data.room].push(data.msg);
+        this.emit('pushNewMsg');
+    }
+
+    handleActions(action) {
+        switch(action.type) {
+            case 'SEND_MESSAGE': {
+                this.updateMsg(action.data);
+            }
+        }
+    }
+}
+
+const roomMsgStore = new RoomMsgStore;
+dispatcher.register(roomMsgStore.handleActions.bind(roomMsgStore));
+export default roomMsgStore;
