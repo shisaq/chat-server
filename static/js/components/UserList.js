@@ -44,10 +44,18 @@ export default class UserList extends React.Component {
     }
 
     componentWillMount() {
-        UsersStore.on('updateUsersList', () => {
-            this.setState({
-                usersList: UsersStore.getAll()
-            });
+        UsersStore.on('updateUsersList', (invalidName) => {
+            if (invalidName === this.state.currentName) {
+                this.setState({
+                    currentName: 'Select a user...',
+                    usersList: UsersStore.getAll()
+                });
+            } else {
+                this.setState({
+                    usersList: UsersStore.getAll()
+                });
+            }
+
         });
 
         this.props.socket.on('connect', () => {

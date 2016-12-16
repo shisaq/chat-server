@@ -35,9 +35,10 @@ class UsersStore extends EventEmitter {
             () => {
                 for(var i = 1; i < this.usersList.length; i++) {
                     if (Date.now() - this.usersList[i].timeStamp > 3500) {
+                        const invalidName = this.usersList[i].name;
+                        console.log('User: [' + invalidName + '] is offline.');
                         this.usersList.splice(i, 1);
-                        console.log('This user is offline. So, byebye.');
-                        this.emit('updateUsersList');
+                        this.emit('updateUsersList', invalidName);
                     }
                 }
             },
