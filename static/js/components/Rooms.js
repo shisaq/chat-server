@@ -31,8 +31,8 @@ export default class Rooms extends React.Component {
         });
 
         this.props.socket.on('invite_match_user', (data) => {
-            RoomsActions.matchUser(data);
             console.log('Let\'s go and see if the username belongs to the room!');
+            RoomsActions.matchUser(data);
         });
     }
 

@@ -70,9 +70,12 @@ export default class Room extends React.Component {
 
     componentWillMount() {
         this.props.socket.on('room_message', (data) => {
-            console.log('Only me receive the message.');
-            console.log(data);
-            RoomMsgActions.sendMessage(data);
+            console.log('I have received the message.');
+            console.log('current room', this.props.info.room);
+            console.log('received room', data.room);
+            if (this.props.info.room === data.room) {
+                RoomMsgActions.sendMessage(data);
+            }
         });
 
         RoomMsgStore.on('pushNewMsg', () => {
