@@ -35,9 +35,13 @@ const styles = {
     },
     chatRecord: {
         height: 290,
-        padding: 5,
+        padding: 10,
         backgroundColor: grey100,
-        overflowY: 'auto'
+        overflowY: 'auto',
+        overflowX: 'hidden'
+    },
+    singleRecord: {
+        margin: '5px 0'
     },
     inputArea: {
         position: 'absolute',
@@ -92,7 +96,7 @@ export default class Room extends React.Component {
                              info.guest : info.inviter;
         messages[info.room] = messages[info.room] || [];
         const msgComponent = messages[info.room].map((msg, index) => {
-            return <p key={index}>{msg}</p>;
+            return <p key={index} style={styles.singleRecord}>{msg}</p>;
         });
 
         return(
