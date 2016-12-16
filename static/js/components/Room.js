@@ -75,17 +75,20 @@ export default class Room extends React.Component {
     componentWillMount() {
         this.props.socket.on('room_message', (data) => {
             console.log('I have received the message.');
-            console.log('current room', this.props.info.room);
-            console.log('received room', data.room);
             if (this.props.info.room === data.room) {
                 RoomMsgActions.sendMessage(data);
             }
         });
 
-        RoomMsgStore.on('pushNewMsg', () => {
+        RoomMsgStore.on('pushNewMsg', (room) => {
             this.setState({
                 messages: RoomMsgStore.getAll()
             });
+            if (this.props.info.room === room) {
+                const node = document.getElementById(room);
+                node.scrollTop = node.scrollHeight;
+                console.log('Scroll bar has been on the bottom!');
+            }
         });
     }
 
@@ -111,7 +114,7 @@ export default class Room extends React.Component {
                         <IconButton style={styles.closeStyle}>
                             <CloseButton />
                         </IconButton>
-                        <div style={styles.chatRecord}>
+                        <div id={info.room} style={styles.chatRecord}>
                             {msgComponent}
                         </div>
                         <TextField

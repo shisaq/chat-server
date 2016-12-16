@@ -61,7 +61,6 @@ def the_private_room(data):
 # 用户在房间发送消息
 @socketio.on('private_message')
 def handle_message(data):
-    print 'send private messages.'
     emit('room_message', data, room=data['room'])
 
 # 启动

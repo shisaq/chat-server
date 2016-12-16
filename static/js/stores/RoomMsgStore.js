@@ -16,7 +16,7 @@ class RoomMsgStore extends EventEmitter {
         this.msgs[data.room] = this.msgs[data.room] || [];
         this.msgs[data.room].push(data.msg);
         localStorage.setItem('msgs', JSON.stringify(this.msgs));
-        this.emit('pushNewMsg');
+        this.emit('pushNewMsg', data.room);
     }
 
     handleActions(action) {
