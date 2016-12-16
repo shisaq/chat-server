@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import Paper from 'material-ui/Paper';
 import { socketConnect } from 'socket.io-react';
 import {cyan500} from 'material-ui/styles/colors';
 
-import Name from "./Name";
-import UserList from "./UserList";
+import Name from './Name';
+import UserList from './UserList';
 
 const styles = {
     paperStyle: {

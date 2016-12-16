@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import { socketConnect } from 'socket.io-react';
 
-import Room from "./Room";
+import Room from './Room';
 import RoomsStore from '../stores/RoomsStore';
 import * as RoomsActions from '../actions/RoomsActions';
 
@@ -26,12 +26,12 @@ export default class Rooms extends React.Component {
             this.setState({
                 rooms: RoomsStore.getAll()
             });
-            console.log('1 room and 2 users have been comfirmed. Now join them into the room.');
+            // 1 room and 2 users have been comfirmed. Now join them into the room.
             this.props.socket.emit('join_private_room', data);
         });
 
         this.props.socket.on('invite_match_user', (data) => {
-            console.log('Let\'s go and see if the username belongs to the room!');
+            // Let's go and see if the username belongs to the room!
             RoomsActions.matchUser(data);
         });
     }

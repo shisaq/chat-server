@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import {grey100} from 'material-ui/styles/colors';
 
-import Header from "./Header";
+import Header from './Header';
 import Rooms from "./Rooms";
 
 const styles = {

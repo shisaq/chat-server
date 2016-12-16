@@ -5,6 +5,7 @@ import dispatcher from '../dispatcher';
 class RoomMsgStore extends EventEmitter {
     constructor() {
         super();
+        // read messages from localStorage, or build an object if there's no data
         this.msgs = JSON.parse(localStorage.getItem('msgs')) || {};
     }
 

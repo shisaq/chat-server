@@ -21,7 +21,7 @@ class UsersStore extends EventEmitter {
                 return;
             }
         }
-        console.log('name does not equal.');
+        // console.log('name does not equal, it will be added.');
         this.usersList.push({
             name,
             timeStamp: Date.now()
@@ -36,7 +36,7 @@ class UsersStore extends EventEmitter {
                 for(var i = 1; i < this.usersList.length; i++) {
                     if (Date.now() - this.usersList[i].timeStamp > 3500) {
                         const invalidName = this.usersList[i].name;
-                        console.log('User: [' + invalidName + '] is offline.');
+                        // console.log('User: [' + invalidName + '] is offline.');
                         this.usersList.splice(i, 1);
                         this.emit('updateUsersList', invalidName);
                     }

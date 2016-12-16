@@ -1,5 +1,5 @@
-import React from "react";
-import DropDownMenu from "material-ui/DropDownMenu";
+import React from 'react';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from "material-ui/MenuItem";
 import ReactTimeout from 'react-timeout';
 import { socketConnect } from 'socket.io-react';
@@ -60,7 +60,6 @@ export default class UserList extends React.Component {
 
         this.props.socket.on('connect', () => {
             UsersListActions.popName();
-            console.log('Now I am heading to action: popName.');
         });
 
         this.props.socket.on('online_name', (name) => {
@@ -75,7 +74,11 @@ export default class UserList extends React.Component {
         const self = this;
         const { socket } = self.props;
         const usernamesComponents = usersList.map((user) => {
-            return <MenuItem key={user.name} value={user.name} primaryText={user.name} />;
+            return <MenuItem
+                key={user.name}
+                value={user.name}
+                primaryText={user.name}
+            />;
         });
 
         return (

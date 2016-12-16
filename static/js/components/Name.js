@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import TextField from 'material-ui/TextField';
 import ReactTimeout from 'react-timeout';
 import { socketConnect } from 'socket.io-react';
@@ -39,7 +39,7 @@ export default class Name extends React.Component {
     }
 
     handleKeyPress(e) {
-        // when press enter, we send the name with disabling input
+        // when press enter, we send the name with invalidate input
         if (e.key === 'Enter' && e.target.value) {
             this.setState({
                 disabled: true,
@@ -52,7 +52,6 @@ export default class Name extends React.Component {
                     self.props.name);
                 },
             3000);
-            console.log('Your name has been sent to the server.');
         }
     }
 

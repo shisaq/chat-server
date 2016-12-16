@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { socketConnect } from 'socket.io-react';
 import {Card, CardHeader} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
@@ -87,7 +87,7 @@ export default class Room extends React.Component {
             if (this.props.info.room === room) {
                 const node = document.getElementById(room);
                 node.scrollTop = node.scrollHeight;
-                console.log('Scroll bar has been on the bottom!');
+                console.log('Scroll bar has reached to the bottom!');
             }
         });
     }
