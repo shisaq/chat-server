@@ -5,7 +5,7 @@ import dispatcher from '../dispatcher';
 class RoomMsgStore extends EventEmitter {
     constructor() {
         super();
-        this.msgs = {};
+        this.msgs = JSON.parse(localStorage.getItem('msgs')) || {};
     }
 
     getAll() {
@@ -15,6 +15,7 @@ class RoomMsgStore extends EventEmitter {
     updateMsg(data) {
         this.msgs[data.room] = this.msgs[data.room] || [];
         this.msgs[data.room].push(data.msg);
+        localStorage.setItem('msgs', JSON.stringify(this.msgs));
         this.emit('pushNewMsg');
     }
 
