@@ -50,7 +50,8 @@ def creat_private_room(names):
     emit('invite_match_user', {
         'inviter': names['inviter'],
         'guest': names['guest'],
-        'room': room
+        'room': room,
+        'isActive': 'true'
     }, broadcast=True)
 
 # 2 filtered users emit this event, then join room

@@ -30,6 +30,12 @@ export default class Rooms extends React.Component {
             this.props.socket.emit('join_private_room', data);
         });
 
+        RoomsStore.on('updateRooms', () => {
+            this.setState({
+                rooms: RoomsStore.getAll()
+            });
+        });
+
         this.props.socket.on('invite_match_user', (data) => {
             // Let's go and see if the username belongs to the room!
             RoomsActions.matchUser(data);

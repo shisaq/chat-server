@@ -10,6 +10,7 @@ import {cyan100, cyan500, grey100} from 'material-ui/styles/colors';
 
 import RoomMsgStore from '../stores/RoomMsgStore';
 import * as RoomMsgActions from '../actions/RoomMsgActions';
+import * as RoomsActions from '../actions/RoomsActions';
 
 const styles = {
     roomStyle: {
@@ -72,6 +73,21 @@ export default class Room extends React.Component {
         }
     }
 
+    show() {
+        const shouldShow = this.props.info.isActive;
+        console.log(shouldShow);
+        if (shouldShow) {
+            return '';
+        } else {
+            return 'hide';
+        }
+    }
+
+    handleClose() {
+        console.log('We should make room[' + this.props.info.room + '] disappear.');
+        RoomsActions.updateStatus(this.props.info.room);
+    }
+
     componentWillMount() {
         this.props.socket.on('room_message', (data) => {
             console.log('I have received the message.');
@@ -103,7 +119,7 @@ export default class Room extends React.Component {
         });
 
         return(
-            <li class="room" style={styles.roomStyle}>
+            <li class={this.show()} style={styles.roomStyle}>
                 <Paper style={styles.paperStyle} zDepth={2}>
                     <Card>
                         <CardHeader
@@ -111,7 +127,9 @@ export default class Room extends React.Component {
                             subtitle="Chatting..."
                             style={styles.cardHeaderStyle}
                         />
-                        <IconButton style={styles.closeStyle}>
+                        <IconButton style={styles.closeStyle}
+                                    onClick={this.handleClose.bind(this)}
+                        >
                             <CloseButton />
                         </IconButton>
                         <div id={info.room} style={styles.chatRecord}>

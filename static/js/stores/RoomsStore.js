@@ -16,6 +16,8 @@ class RoomsStore extends EventEmitter {
         for (var i = 0; i < this.rooms.length; i++) {
             if (data.room === this.rooms[i].room) {
                 // console.log('This room has already been there.');
+                this.rooms[i].isActive = true;
+                this.emit('addNewRoom', data);
                 return;
             }
         }
@@ -27,10 +29,23 @@ class RoomsStore extends EventEmitter {
         }
     }
 
+    updateStatus(room) {
+        for (var i = 0; i < this.rooms.length; i++) {
+            if (room === this.rooms[i].room) {
+                console.log(this.rooms[i].isActive);
+                this.rooms[i].isActive = false;
+                this.emit('updateRooms');
+            }
+        }
+    }
+
     handleActions(action) {
         switch(action.type) {
             case 'MATCH_USER': {
                 this.matchUser(action.data);
+            }
+            case 'UPDATE_STATUS': {
+                this.updateStatus(action.room);
             }
         }
     }

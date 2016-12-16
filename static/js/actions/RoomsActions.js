@@ -6,3 +6,10 @@ export function matchUser(data) {
         data
     })
 }
+
+export function updateStatus(room) {
+    dispatcher.dispatch({
+        type: 'UPDATE_STATUS',
+        room
+    })
+}
