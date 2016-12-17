@@ -8,13 +8,14 @@
 
 ## Installation
  1. Download this repository
-   `git clone https://github.com/shisaq/chat-server.git`
+   `$ git clone https://github.com/shisaq/chat-server.git`
  2. On the root of this repository, open your terminal
- 3. Run `./run.sh` to install dependencies
+ 3. Get the permission to read, write and execute: `$ chmod 755 ./run.sh`
+ 4. Run `$ ./run.sh` to install dependencies
     ![server running](http://7xpx1z.com1.z0.glb.clouddn.com/github/serverrunning.png)
- 4. Open your browser, type `localhost:5000` or `127.0.0.1:5000`
+ 5. Open your browser, type `localhost:5000` or `127.0.0.1:5000`
     ![index](http://7xpx1z.com1.z0.glb.clouddn.com/github/chatserverindex.png)
- 5. (optional) If you prefer, you can run `npm install` to customize the front-end works
+ 6. (optional) If you prefer, you can run `npm install` to customize the front-end works
 
 ## Technique stack
 
