@@ -47,9 +47,8 @@ const styles = {
     inputArea: {
         position: 'absolute',
         bottom: 0,
-        left: 0,
-        right: 0,
-        paddingLeft: 10
+        padding: '0 10px',
+        width: 'calc(100% - 20px)'
     }
 };
 
@@ -64,7 +63,7 @@ export default class Room extends React.Component {
 
     handleKeyPress(e) {
         if (e.key === 'Enter' && e.target.value) {
-            console.log('I will send this message to the server.');
+            // console.log('I will send this message to the server.');
             this.props.socket.emit('private_message', {
                 msg: localStorage.name + ': ' + e.target.value,
                 room: this.props.info.room
@@ -75,7 +74,7 @@ export default class Room extends React.Component {
 
     show() {
         const shouldShow = this.props.info.isActive;
-        console.log(shouldShow);
+        // console.log(shouldShow);
         if (shouldShow) {
             return '';
         } else {
@@ -84,13 +83,13 @@ export default class Room extends React.Component {
     }
 
     handleClose() {
-        console.log('We should make room[' + this.props.info.room + '] disappear.');
+        // console.log('We should make room[' + this.props.info.room + '] disappear.');
         RoomsActions.updateStatus(this.props.info.room);
     }
 
     componentWillMount() {
         this.props.socket.on('room_message', (data) => {
-            console.log('I have received the message.');
+            // console.log('I have received the message.');
             if (this.props.info.room === data.room) {
                 RoomMsgActions.sendMessage(data);
             }
@@ -103,7 +102,7 @@ export default class Room extends React.Component {
             if (this.props.info.room === room) {
                 const node = document.getElementById(room);
                 node.scrollTop = node.scrollHeight;
-                console.log('Scroll bar has reached to the bottom!');
+                // console.log('Scroll bar has reached to the bottom!');
             }
         });
     }

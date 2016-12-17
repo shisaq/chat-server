@@ -32,7 +32,7 @@ class RoomsStore extends EventEmitter {
     updateStatus(room) {
         for (var i = 0; i < this.rooms.length; i++) {
             if (room === this.rooms[i].room) {
-                console.log(this.rooms[i].isActive);
+                // console.log(this.rooms[i].isActive);
                 this.rooms[i].isActive = false;
                 this.emit('updateRooms');
             }
