@@ -65,7 +65,7 @@ export default class Room extends React.Component {
         if (e.key === 'Enter' && e.target.value) {
             // console.log('I will send this message to the server.');
             this.props.socket.emit('private_message', {
-                msg: localStorage.name + ': ' + e.target.value,
+                msg: sessionStorage.name + ': ' + e.target.value,
                 room: this.props.info.room
             });
             e.target.value = '';
@@ -110,7 +110,7 @@ export default class Room extends React.Component {
     render() {
         const { messages } = this.state;
         const { info } = this.props;
-        const oppositeName = (info.inviter === localStorage.name) ?
+        const oppositeName = (info.inviter === sessionStorage.name) ?
                              info.guest : info.inviter;
         messages[info.room] = messages[info.room] || [];
         const msgComponent = messages[info.room].map((msg, index) => {

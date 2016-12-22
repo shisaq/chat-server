@@ -21,8 +21,8 @@ class RoomsStore extends EventEmitter {
                 return;
             }
         }
-        if (localStorage.name === data.inviter ||
-            localStorage.name === data.guest) {
+        if (sessionStorage.name === data.inviter ||
+            sessionStorage.name === data.guest) {
             // console.log('Ready to make a new room out!!!');
             this.rooms.push(data);
             this.emit('addNewRoom', data);

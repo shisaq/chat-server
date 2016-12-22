@@ -33,9 +33,9 @@ export default class UserList extends React.Component {
 
     handleChange = (event, index, value) => {
         this.setState({currentName: value});
-        if (value !== localStorage.name && value !== 'Select a user...') {
+        if (value !== sessionStorage.name && value !== 'Select a user...') {
             this.props.socket.emit('build_private_room', {
-                inviter: localStorage.name,
+                inviter: sessionStorage.name,
                 guest: value
             });
         } else {
