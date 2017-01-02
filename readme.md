@@ -17,6 +17,29 @@
     ![index](http://7xpx1z.com1.z0.glb.clouddn.com/github/chatserverindex.png)
  6. (optional) If you prefer, you can run `npm install` to customize the front-end works
 
+## How it looks
+
+### Hit enter to register
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverinit.gif)
+
+### Users list
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverdynamicrefreshuserlist.gif)
+
+### Popup private room
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverselectuser.gif)
+
+### Caller and callee popup together
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverpopuptogether.gif)
+
+### Hit enter to send message
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverreceiveintime.gif)
+
+### Private messages
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverprivate.gif)
+
+### Users list refresh dynamically
+![](http://7xpx1z.com1.z0.glb.clouddn.com/chatserver/chatserverofflinerefresh.gif)
+
 ## Technique stack
 
  * [Flask](http://flask.pocoo.org/)
