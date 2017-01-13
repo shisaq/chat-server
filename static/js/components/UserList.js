@@ -1,7 +1,6 @@
 import React from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from "material-ui/MenuItem";
-import ReactTimeout from 'react-timeout';
 import { socketConnect } from 'socket.io-react';
 
 import * as UsersListActions from '../actions/UsersListActions';
@@ -20,7 +19,6 @@ const styles = {
     }
 };
 
-@ReactTimeout
 @socketConnect
 export default class UserList extends React.Component {
     constructor() {
